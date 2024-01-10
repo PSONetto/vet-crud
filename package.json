@@ -12,12 +12,17 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-aria": "^3.31.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
+    "react-stately": "^3.29.0",
+    "react-table": "^7.8.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/react-table": "^7.7.19",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
     "@typescript-eslint/parser": "^6.18.0",
     "@vitejs/plugin-react": "^4.2.1",
