@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { useButton } from 'react-aria';
 
-import { IStandardButtonProps } from './interface';
+import { IStandardButtonProps } from '../interfaces';
 
 export default function Button(props: IStandardButtonProps) {
   const ref = useRef(null);
   const { buttonProps } = useButton(props, ref);
-  const { children, icon, theme } = props;
+  const { children, icon, theme, className, buttonRef } = props;
 
   let themeClass = '';
 
@@ -34,11 +34,11 @@ export default function Button(props: IStandardButtonProps) {
   return (
     <button
       {...buttonProps}
-      ref={ref}
+      ref={ref || buttonRef}
       className={
         'p-1 flex items-center justify-center gap-1 transition ease-in-out duration-300' +
         ' ' +
-        themeClass
+        (themeClass || className)
       }
     >
       {icon}

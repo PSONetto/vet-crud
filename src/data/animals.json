@@ -1,0 +1,144 @@
+{
+  "animals": [
+    {
+      "species": "Dog",
+      "commonBreeds": [
+        "Labrador Retriever",
+        "German Shepherd",
+        "Golden Retriever",
+        "Bulldog",
+        "Beagle",
+        "Poodle",
+        "Boxer",
+        "Dachshund",
+        "Yorkshire Terrier",
+        "Rottweiler",
+        "Shih Tzu",
+        "Siberian Husky",
+        "Doberman Pinscher",
+        "Great Dane",
+        "Cocker Spaniel",
+        "Chihuahua",
+        "Pug",
+        "Australian Shepherd",
+        "Miniature Schnauzer",
+        "Shetland Sheepdog",
+        "Border Collie",
+        "Pomeranian",
+        "Basset Hound",
+        "Bichon Frise",
+        "West Highland White Terrier",
+        "Maltese",
+        "Boston Terrier",
+        "Cavalier King Charles Spaniel",
+        "Akita",
+        "Chinese Shar-Pei",
+        "Papillon",
+        "Bloodhound",
+        "Newfoundland",
+        "Saint Bernard",
+        "Havanese",
+        "Greyhound",
+        "Irish Wolfhound",
+        "Cane Corso",
+        "Bullmastiff",
+        "Shiba Inu",
+        "Miniature Pinscher",
+        "Alaskan Malamute",
+        "Pointer",
+        "English Setter",
+        "Whippet",
+        "Bernese Mountain Dog",
+        "Rhodesian Ridgeback",
+        "Other"
+      ]
+    },
+    {
+      "species": "Cat",
+      "commonBreeds": [
+        "Domestic Shorthair",
+        "Siamese",
+        "Persian",
+        "Maine Coon",
+        "Ragdoll",
+        "Sphynx",
+        "Bengal",
+        "American Shorthair",
+        "Other"
+      ]
+    },
+    {
+      "species": "Horse",
+      "commonBreeds": [
+        "Thoroughbred",
+        "Quarter Horse",
+        "Arabian",
+        "Appaloosa",
+        "Paint Horse",
+        "Morgan Horse",
+        "Tennessee Walking Horse",
+        "American Quarter Pony",
+        "Other"
+      ]
+    },
+    {
+      "species": "Bird",
+      "commonBreeds": [
+        "Budgerigar",
+        "Cockatiel",
+        "African Grey Parrot",
+        "Canary",
+        "Lovebird",
+        "Conure",
+        "Cockatoo",
+        "Amazon Parrot",
+        "Other"
+      ]
+    },
+    {
+      "species": "Rabbit",
+      "commonBreeds": [
+        "Holland Lop",
+        "Mini Rex",
+        "Flemish Giant",
+        "Netherland Dwarf",
+        "Dutch Rabbit",
+        "Lionhead Rabbit",
+        "Angora Rabbit",
+        "English Lop",
+        "Other"
+      ]
+    },
+    {
+      "species": "Fish",
+      "commonBreeds": [
+        "Goldfish",
+        "Betta Fish",
+        "Angelfish",
+        "Guppy",
+        "Tetra",
+        "Molly",
+        "Platy",
+        "Swordtail",
+        "Other"
+      ]
+    },
+    {
+      "species": "Reptile",
+      "commonBreeds": [
+        "Bearded Dragon",
+        "Ball Python",
+        "Leopard Gecko",
+        "Corn Snake",
+        "Red-eared Slider",
+        "Russian Tortoise",
+        "Iguana",
+        "Boa Constrictor",
+        "Other"
+      ]
+    },
+    {
+      "species": "Other"
+    }
+  ]
+}

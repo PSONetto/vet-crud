@@ -1,5 +1,5 @@
-import List from './components/list/List';
-import Logo from './components/logo/Logo';
+import List from '../../components/list/List';
+import Logo from '../../components/logo/Logo';
 
 export default function Home() {
   return (

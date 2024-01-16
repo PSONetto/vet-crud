@@ -1,7 +1,8 @@
 import { FaPlus } from 'react-icons/fa';
 
-import Button from '../buttons/button/Button';
+import CreatePetForm from '../../pages/home/crud/CreatePetForm';
 import Table from '../collections/table/Table';
+import ModalTrigger from '../overlays/modal/ModalTrigger';
 
 export default function List() {
   const columns = [
@@ -30,7 +31,13 @@ export default function List() {
     <div className="flex flex-col items-center justify-center mt-5">
       <span className="text-xl mb-2 font-bold">Our Pets</span>
       <div className="flex mb-1">
-        <Button icon={<FaPlus />}>New Pet</Button>
+        <ModalTrigger
+          modalClassName="w-3/4"
+          label="New Pet"
+          labelIcon={<FaPlus />}
+        >
+          {(close) => <CreatePetForm close={close} />}
+        </ModalTrigger>
       </div>
       <Table columns={columns} data={data} />
     </div>

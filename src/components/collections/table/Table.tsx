@@ -1,8 +1,6 @@
-'use client';
-
 import { TableOptions, useTable } from 'react-table';
 
-import { ITableProps } from './interface';
+import { ITableProps } from '../interfaces';
 
 export default function Table({ columns, data }: ITableProps) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
