@@ -8,4 +8,5 @@ export interface IStandardButtonProps extends AriaButtonProps {
   icon?: React.ReactNode;
   className?: string;
   buttonRef?: RefObject<AriaButtonProps>;
+  iconPos?: 'right' | 'left';
 }

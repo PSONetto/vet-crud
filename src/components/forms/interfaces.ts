@@ -1,5 +1,6 @@
 /* eslint-disable import/named */
 import {
+  AriaCheckboxProps,
   AriaNumberFieldProps,
   AriaRadioGroupProps,
   AriaRadioProps,
@@ -60,4 +61,15 @@ export interface IRadioInput extends AriaRadioGroupProps {
         'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
       >
     | undefined;
+}
+
+export interface ICheckbox extends AriaCheckboxProps {
+  control: Control;
+  rules?:
+    | Omit<
+        RegisterOptions<FieldValues, string>,
+        'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+      >
+    | undefined;
+  defaultValue?: boolean;
 }

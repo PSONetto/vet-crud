@@ -4,9 +4,10 @@ import { LabelAriaProps } from 'react-aria';
 import { ValidationRule } from 'react-hook-form';
 
 export interface ILabelProps {
-  props: LabelAriaProps;
+  props?: LabelAriaProps;
   required: string | ValidationRule<boolean> | undefined;
   children: React.ReactNode;
+  className?: string;
 }
 
 export interface IInvalidProps {

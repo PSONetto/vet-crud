@@ -21,7 +21,7 @@ export default function ModalTrigger({
 
   return (
     <>
-      <Button {...triggerProps} icon={labelIcon}>
+      <Button {...triggerProps} icon={labelIcon} theme="primary">
         {label}
       </Button>
       {state.isOpen && (
