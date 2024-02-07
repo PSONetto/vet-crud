@@ -45,5 +45,4 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
   },
-  exclude: ['tailwind.config.js'],
 };

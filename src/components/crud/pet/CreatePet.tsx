@@ -3,21 +3,18 @@ import { useState } from 'react';
 import { Key } from 'react-aria';
 import { FieldValues, useForm } from 'react-hook-form';
 import { FaCheck, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { Item } from 'react-stately';
 
-import Button from '../../../components/buttons/button/Button';
-import { Checkbox } from '../../../components/forms/checkbox/Checkbox';
-import TextArea from '../../../components/forms/input/text/area/TextArea';
-import TextField from '../../../components/forms/input/text/field/TextField';
-import Tabs from '../../../components/navigation/tab/Tabs';
-import Dialog from '../../../components/overlays/dialog/Dialog';
-import { Item } from '../../../components/pickers/combobox/ComboBox';
-import ComboBoxInput from '../../../components/pickers/combobox/ComboBoxInput';
+import Button from '../../buttons/button/Button';
+import { Checkbox } from '../../forms/checkbox/Checkbox';
+import TextArea from '../../forms/input/text/area/TextArea';
+import TextField from '../../forms/input/text/field/TextField';
+import Tabs from '../../navigation/tab/Tabs';
+import Dialog from '../../overlays/dialog/Dialog';
+import ComboBoxInput from '../../pickers/combobox/ComboBoxInput';
+import { ICreatePet } from './interfaces';
 
-export interface ICreateOwner {
-  close: () => void;
-}
-
-export default function CreateOwnerForm({ close }: ICreateOwner) {
+export default function CreatePet({ close }: ICreatePet) {
   const { control, handleSubmit } = useForm();
 
   const [tabKey, setTabKey] = useState<Key>(1);
@@ -50,18 +47,14 @@ export default function CreateOwnerForm({ close }: ICreateOwner) {
   }
 
   return (
-    <Dialog
-      title="Create Pet Owner"
-      close={close}
-      className="dark:text-gray-100"
-    >
+    <Dialog title="Create Pet" close={close} className="dark:text-gray-100">
       <form
         onSubmit={handleSubmit(submitData)}
         className="flex flex-col items-center justify-center"
       >
         <Container>
           <Tabs
-            aria-label="Owner Information Form Tabs"
+            aria-label="Pet Information Form Tabs"
             selectedKey={tabKey}
             onSelectionChange={setTabKey}
             disabledKeys={keys.filter((e) => e !== tabKey)}
