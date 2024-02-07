@@ -12,9 +12,9 @@ import TextField from '../../forms/input/text/field/TextField';
 import Tabs from '../../navigation/tab/Tabs';
 import Dialog from '../../overlays/dialog/Dialog';
 import ComboBoxInput from '../../pickers/combobox/ComboBoxInput';
-import { ICreateOwner } from './interfaces';
+import { ICreateOwnerProps } from './interfaces';
 
-export default function CreateOwner({ close }: ICreateOwner) {
+export default function CreateOwner({ close }: ICreateOwnerProps) {
   const { control, handleSubmit } = useForm();
 
   const [tabKey, setTabKey] = useState<Key>(1);

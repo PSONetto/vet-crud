@@ -9,7 +9,6 @@ import Modal from './Modal';
 export default function ModalTrigger({
   label,
   children,
-  modalClassName,
   labelIcon,
   ...props
 }: IModalTriggerProps) {
@@ -25,7 +24,7 @@ export default function ModalTrigger({
         {label}
       </Button>
       {state.isOpen && (
-        <Modal {...props} className={modalClassName} state={state}>
+        <Modal {...props} className="w-11/12 md:w-3/4" state={state}>
           {cloneElement(children(state.close), overlayProps)}
         </Modal>
       )}

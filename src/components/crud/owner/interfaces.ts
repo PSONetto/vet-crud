@@ -1,6 +1,11 @@
 import { IOwner } from '../../../models/owner';
 
-export interface ICreateOwner {
+export interface IListOwnerProps {
+  data: IOwner[] | undefined;
+  isLoading: boolean;
+}
+
+export interface ICreateOwnerProps {
   close: () => void;
 }
 

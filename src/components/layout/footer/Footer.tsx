@@ -28,8 +28,8 @@ export default function Footer() {
   const year = getYear(new Date());
 
   return (
-    <footer className="flex items-center justify-between p-3 bg-gray-900 text-white text-lg">
-      <div className="flex flex-col items-start justify-center">
+    <footer className="flex flex-col md:flex-row gap-3 md:gap-0 items-center justify-between p-3 bg-gray-900 text-white text-lg">
+      <div className="flex flex-col items-start justify-center order-1">
         <SocialMediaLink href="https://github.com/PSONetto/">
           <FaGithub /> GitHub
         </SocialMediaLink>
@@ -41,9 +41,9 @@ export default function Footer() {
         </SocialMediaLink>
       </div>
 
-      <span className="text-sm">© {year} Vet CRUD</span>
+      <span className="text-sm order-3 md:order-2">© {year} Vet CRUD</span>
 
-      <span>Made by PSONetto</span>
+      <span className="text-sm order-2 md:order-3">Made by PSONetto</span>
     </footer>
   );
 }

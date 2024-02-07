@@ -1,16 +1,18 @@
 import { FaTimes } from 'react-icons/fa';
-import { FaCheck } from 'react-icons/fa6';
+import { FaCheck, FaPlus } from 'react-icons/fa6';
 import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
 import Separator from '../../components/content/separator/Separator';
+import CreatePet from '../../components/crud/pet/CreatePet';
 import ListPet from '../../components/crud/pet/ListPet';
-import Loading from '../../components/loading/Loading';
 import BreadcrumbItem from '../../components/navigation/breadcrumbs/BreadcrumbItem';
 import Breadcrumbs from '../../components/navigation/breadcrumbs/Breadcrumbs';
+import ModalTrigger from '../../components/overlays/modal/ModalTrigger';
 import { api } from '../../lib/api';
 import formatPhoneNumber from '../../lib/utils/formatPhoneNumber';
+import formatZipCode from '../../lib/utils/formatZipCode';
 import { IOwner } from '../../models/owner';
 
 export default function Owner() {
@@ -57,7 +59,7 @@ export default function Owner() {
         </BreadcrumbItem>
       </Breadcrumbs>
 
-      <div className="flex flex-col w-full px-2 py-6 mt-5 border rounded">
+      <div className="flex flex-col w-full px-2 py-6 mt-5 border rounded border-gray-500">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between md:px-2">
           <DisplayData label="Name" large>
             {owner?.firstName} {owner?.lastName}
@@ -84,12 +86,10 @@ export default function Owner() {
             <div className="px-2">
               <DisplayData label="E-mail">{owner?.emailAddress}</DisplayData>
               <DisplayData label="Phone 1">
-                {owner?.phoneNumber && formatPhoneNumber(owner?.phoneNumber)}
+                {formatPhoneNumber(owner?.phoneNumber)}
               </DisplayData>
               <DisplayData label="Phone 2">
-                {owner?.alternativePhoneNumber
-                  ? formatPhoneNumber(owner?.alternativePhoneNumber)
-                  : ' - '}
+                {formatPhoneNumber(owner?.alternativePhoneNumber)}
               </DisplayData>
               <DisplayData label="Preferred Contact Method">
                 {owner?.preferredContactMethod}
@@ -105,7 +105,7 @@ export default function Owner() {
               <DisplayData label="City">{owner?.address.city}</DisplayData>
               <DisplayData label="State">{owner?.address.state}</DisplayData>
               <DisplayData label="Zip Code">
-                {owner?.address.zipCode ?? ' - '}
+                {formatZipCode(owner?.address.zipCode)}
               </DisplayData>
             </div>
           </div>
@@ -137,12 +137,13 @@ export default function Owner() {
         </div>
       </div>
 
-      {isLoading ? (
-        <Loading />
-      ) : (
-        owner &&
-        owner?.pets && <ListPet data={owner?.pets} isLoading={isLoading} />
-      )}
+      <div className="flex justify-end mt-4 mb-1 ">
+        <ModalTrigger label="New Pet" labelIcon={<FaPlus />}>
+          {(close) => <CreatePet close={close} />}
+        </ModalTrigger>
+      </div>
+
+      <ListPet data={owner?.pets} isLoading={isLoading} />
     </>
   );
 }
