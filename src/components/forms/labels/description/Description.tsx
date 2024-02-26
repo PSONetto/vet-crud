@@ -5,7 +5,7 @@ export default function Description({
   description,
 }: IDescriptionProps) {
   return (
-    <div className="text-xs italic" {...descriptionProps}>
+    <div className="text-sm md:text-xs italic" {...descriptionProps}>
       {description}
     </div>
   );

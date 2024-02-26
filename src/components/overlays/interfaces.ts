@@ -21,7 +21,7 @@ export interface IModalProps extends AriaModalOverlayProps {
 }
 
 export interface IModalTriggerProps extends Partial<OverlayTriggerState> {
-  label: string | React.ReactNode;
+  label?: string;
   // eslint-disable-next-line no-unused-vars
   children(data: () => void): ReactElement;
   modalClassName?: string;
@@ -31,6 +31,6 @@ export interface IModalTriggerProps extends Partial<OverlayTriggerState> {
 export interface IPopoverProps extends Omit<AriaPopoverProps, 'popoverRef'> {
   children: React.ReactNode;
   state: OverlayTriggerState;
-  ref?: RefObject<Omit<AriaPopoverProps, 'popoverRef'>>;
+  popoverRef?: RefObject<Omit<AriaPopoverProps, 'popoverRef'>>;
   className?: string;
 }

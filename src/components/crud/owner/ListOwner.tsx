@@ -47,11 +47,11 @@ export default function ListOwner({ data, isLoading }: IListOwnerProps) {
       sortable: true,
       format: (row) =>
         row.treatmentAuthorization ? (
-          <span className="text-green-600">
+          <span className="text-green-400">
             <FaCheck />
           </span>
         ) : (
-          <span className="text-red-600">
+          <span className="text-red-400">
             <FaTimes />
           </span>
         ),

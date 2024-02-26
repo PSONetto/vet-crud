@@ -9,7 +9,7 @@ export default function TabPanel({ state, ...props }: ITabPanel) {
   const { tabPanelProps } = useTabPanel(props, state, ref);
 
   return (
-    <div {...tabPanelProps} ref={ref}>
+    <div {...tabPanelProps} ref={ref} className="overflow-auto">
       {state.selectedItem?.props.children}
     </div>
   );

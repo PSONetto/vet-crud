@@ -2,15 +2,27 @@
 
 /* eslint-disable import/no-unresolved */
 import { AriaComboBoxProps } from 'react-aria';
-import { Control, FieldValues, RegisterOptions } from 'react-hook-form';
+import {
+  Control,
+  FieldError,
+  FieldValues,
+  RegisterOptions,
+} from 'react-hook-form';
 
 import { ComboBoxProps } from '@react-types/combobox';
 
-export interface IComboBox extends AriaComboBoxProps<object> {
+export interface IComboBoxProps extends AriaComboBoxProps<object> {
   popoverClassName?: string;
+  error?: FieldError;
+  rules?:
+    | Omit<
+        RegisterOptions<FieldValues, string>,
+        'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+      >
+    | undefined;
 }
 
-export interface IComboBoxInput extends ComboBoxProps<object> {
+export interface IComboBoxInputProps extends ComboBoxProps<object> {
   control: Control;
   name: string;
   defaultValue?: string;

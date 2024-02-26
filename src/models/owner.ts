@@ -13,7 +13,6 @@ export interface IOwner {
   additionalNotes?: string;
   acceptUpdates: boolean;
   acceptMarketing: boolean;
-  referralSource?: string;
   treatmentAuthorization: boolean;
   address: IAddress;
   pets: IPet[];
@@ -26,7 +25,7 @@ interface IAddress {
   street: string;
   city: string;
   state: string;
-  zipCode: string;
+  zipCode?: string;
   ownerId: number;
 }
 

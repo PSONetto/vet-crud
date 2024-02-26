@@ -26,7 +26,7 @@ export default function Popover({
       <div {...underlayProps} className="fixed inset-0" />
       <div
         {...popoverProps}
-        ref={popoverRef || props.ref}
+        ref={popoverRef || props.popoverRef}
         className={`bg-zinc-900 border shadow rounded-md ${className}`}
       >
         <svg

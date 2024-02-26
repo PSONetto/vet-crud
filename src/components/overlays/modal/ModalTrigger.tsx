@@ -2,7 +2,7 @@ import { cloneElement } from 'react';
 import { useOverlayTrigger } from 'react-aria';
 import { useOverlayTriggerState } from 'react-stately';
 
-import Button from '../../buttons/button/Button';
+import PrimaryButton from '../../buttons/PrimaryButton';
 import { IModalTriggerProps } from '../interfaces';
 import Modal from './Modal';
 
@@ -20,9 +20,11 @@ export default function ModalTrigger({
 
   return (
     <>
-      <Button {...triggerProps} icon={labelIcon} theme="primary">
-        {label}
-      </Button>
+      <PrimaryButton
+        triggerProps={triggerProps}
+        icon={labelIcon}
+        label={label}
+      />
       {state.isOpen && (
         <Modal {...props} className="w-11/12 md:w-3/4" state={state}>
           {cloneElement(children(state.close), overlayProps)}

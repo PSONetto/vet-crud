@@ -5,8 +5,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { FaCheck, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Item } from 'react-stately';
 
-import Button from '../../buttons/button/Button';
-import { Checkbox } from '../../forms/checkbox/Checkbox';
+import Button from '../../buttons/Button';
+import { Checkbox } from '../../forms/input/checkbox/Checkbox';
 import TextArea from '../../forms/input/text/area/TextArea';
 import TextField from '../../forms/input/text/field/TextField';
 import Tabs from '../../navigation/tab/Tabs';

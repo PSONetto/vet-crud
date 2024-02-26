@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import { useEffect, useState } from 'react';
 // eslint-disable-next-line import/named
 import DataTable, { TableProps, createTheme } from 'react-data-table-component';
@@ -29,7 +28,7 @@ export default function DataTableBase<T>(props: TableProps<T>): JSX.Element {
         secondary: '#cccccc',
       },
       background: {
-        default: '#111827',
+        default: '#27272a',
       },
     },
     'dark',

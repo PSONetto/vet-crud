@@ -25,7 +25,7 @@ export default function Option({ item, state }: IOptionProps) {
       {...optionProps}
       ref={ref}
       className={`m-1 rounded py-2 px-2 text-sm outline-none cursor-default flex items-center justify-between ${text} ${
-        isFocused ? 'bg-teal-100' : ''
+        isFocused ? 'bg-teal-100 text-black' : ''
       } ${isSelected ? 'font-bold' : ''}`}
     >
       {item.rendered}

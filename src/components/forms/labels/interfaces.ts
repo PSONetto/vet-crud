@@ -1,18 +1,17 @@
 /* eslint-disable import/named */
-import { DOMAttributes } from 'react';
+import { DOMAttributes, ReactNode } from 'react';
 import { LabelAriaProps } from 'react-aria';
-import { ValidationRule } from 'react-hook-form';
+import { FieldError, ValidationRule } from 'react-hook-form';
 
 export interface ILabelProps {
   props?: LabelAriaProps;
   required: string | ValidationRule<boolean> | undefined;
   children: React.ReactNode;
-  className?: string;
 }
 
 export interface IInvalidProps {
   errorMessageProps: DOMAttributes<Element>;
-  validationErrors?: string[];
+  validationErrors?: FieldError;
 }
 
 export interface IDescriptionProps {
@@ -25,4 +24,15 @@ export interface IDescriptionProps {
     | Iterable<React.ReactNode>
     | React.ReactNode
     | React.ReactPortal;
+}
+
+export interface IInputContainerProps {
+  label: string | ReactNode;
+  labelProps: LabelAriaProps;
+  required?: string | ValidationRule<boolean>;
+  description?: string | ReactNode;
+  descriptionProps?: React.DOMAttributes<Element>;
+  error?: FieldError;
+  errorMessageProps?: React.DOMAttributes<Element>;
+  children: ReactNode;
 }

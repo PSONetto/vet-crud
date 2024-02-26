@@ -20,8 +20,7 @@ export default function Modal({
       >
         <div
           className={
-            className +
-            ' bg-gradient-to-bl bg-zinc-700 border border-solid border-gray-500'
+            className + ' bg-zinc-700 border border-solid border-zinc-500'
           }
           {...modalProps}
           ref={ref}

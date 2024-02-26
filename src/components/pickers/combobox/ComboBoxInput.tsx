@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 
-import { IComboBoxInput } from '../interfaces';
+import { IComboBoxInputProps } from '../interfaces';
 import ComboBox from './ComboBox';
 
 export default function ComboBoxInput({
@@ -12,22 +12,25 @@ export default function ComboBoxInput({
   children,
   onSelectionChange,
   ...props
-}: IComboBoxInput) {
+}: IComboBoxInputProps) {
   return (
     <Controller
       control={control}
       name={name ?? ''}
       defaultValue={defaultValue ?? ''}
       rules={rules}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <div className="flex flex-col w-full">
           <ComboBox
             label={label}
-            menuTrigger="focus"
+            menuTrigger="input"
             onSelectionChange={(e) => {
               field.onChange && field.onChange(e);
               onSelectionChange && onSelectionChange(e);
             }}
+            selectedKey={field.value}
+            error={fieldState.error}
+            rules={rules}
             {...props}
           >
             {children}

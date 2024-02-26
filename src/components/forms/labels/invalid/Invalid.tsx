@@ -5,8 +5,12 @@ export default function Invalid({
   validationErrors,
 }: IInvalidProps) {
   return (
-    <div className="text-red-600 text-xs" {...errorMessageProps}>
-      {validationErrors.join(' ')}
+    <div
+      className="text-red-400 text-xs"
+      aria-live="assertive"
+      {...errorMessageProps}
+    >
+      {validationErrors?.message}
     </div>
   );
 }

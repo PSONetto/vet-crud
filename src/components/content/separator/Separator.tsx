@@ -7,7 +7,7 @@ export default function Separator(props: SeparatorProps) {
   return (
     <div
       {...separatorProps}
-      className={`bg-gray-500 ${
+      className={`bg-zinc-500 ${
         props.orientation === 'vertical'
           ? 'w-[1px] h-full my-0 mx-1'
           : 'w-full h-[1px] my-1 mx-0'

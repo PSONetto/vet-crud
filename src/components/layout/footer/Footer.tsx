@@ -28,7 +28,7 @@ export default function Footer() {
   const year = getYear(new Date());
 
   return (
-    <footer className="flex flex-col md:flex-row gap-3 md:gap-0 items-center justify-between p-3 bg-gray-900 text-white text-lg">
+    <footer className="flex flex-col md:flex-row gap-3 md:gap-0 items-center justify-between p-3 bg-zinc-600 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 text-lg">
       <div className="flex flex-col items-start justify-center order-1">
         <SocialMediaLink href="https://github.com/PSONetto/">
           <FaGithub /> GitHub

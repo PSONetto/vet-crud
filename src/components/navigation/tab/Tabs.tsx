@@ -14,11 +14,17 @@ export default function Tabs(props: AriaTabListProps<object>) {
 
   return (
     <div
-      className={`flex h-[60vh] ${
-        props.orientation === 'vertical' ? 'flex-row' : 'flex-col'
+      className={`flex ${
+        props.orientation === 'vertical'
+          ? 'flex-row h-[60vw]'
+          : 'flex-col h-[60vh]'
       }`}
     >
-      <div {...tabListProps} ref={ref}>
+      <div
+        {...tabListProps}
+        ref={ref}
+        className="overflow-x-auto min-h-[10vh] md:min-h-0"
+      >
         {[...state.collection].map((item) => (
           <Tab key={item.key} item={item} state={state} />
         ))}

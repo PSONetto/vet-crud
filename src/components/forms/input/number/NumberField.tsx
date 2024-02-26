@@ -12,34 +12,35 @@ import { Controller } from 'react-hook-form';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { useNumberFieldState } from 'react-stately';
 
-import Button from '../../../buttons/button/Button';
-import { INumberField } from '../../interfaces';
-import Description from '../../labels/description/Description';
-import Invalid from '../../labels/invalid/Invalid';
-import Label from '../../labels/label/Label';
+import Button from '../../../buttons/Button';
+import InputContainer from '../../labels/container/InputContainer';
+import { INumberFieldProps } from '../interfaces';
 
-export default function NumberField(props: INumberField) {
+export default function NumberField({
+  control,
+  name,
+  label,
+  rules,
+  minValue,
+  maxValue,
+  isDisabled,
+  description,
+  defaultValue,
+  ...props
+}: INumberFieldProps) {
   const { locale } = useLocale();
   const state = useNumberFieldState({ ...props, locale });
   const inputRef = useRef(null);
-
-  const { label, control, rules } = props;
 
   const [isMax, setIsMax] = useState(false);
   const [isMin, setIsMin] = useState(false);
 
   useEffect(() => {
-    if (
-      (props.minValue || props.minValue === 0) &&
-      props.minValue === props.defaultValue
-    )
+    if ((minValue || minValue === 0) && minValue === defaultValue)
       setIsMin(true);
-    if (
-      (props.maxValue || props.maxValue === 0) &&
-      props.maxValue === props.defaultValue
-    )
+    if ((maxValue || maxValue === 0) && maxValue === defaultValue)
       setIsMax(true);
-  }, [props.defaultValue, props.maxValue, props.minValue]);
+  }, [defaultValue, maxValue, minValue]);
 
   const {
     labelProps,
@@ -48,22 +49,37 @@ export default function NumberField(props: INumberField) {
     incrementButtonProps,
     decrementButtonProps,
     descriptionProps,
-    isInvalid,
     errorMessageProps,
-    validationErrors,
-  } = useNumberField(props, state, inputRef);
+  } = useNumberField(
+    {
+      label,
+      description,
+      minValue,
+      maxValue,
+      defaultValue,
+      isDisabled,
+      ...props,
+    },
+    state,
+    inputRef,
+  );
 
   return (
     <Controller
       control={control}
-      name={props.name ?? ''}
-      defaultValue={props.defaultValue}
+      name={name ?? ''}
+      defaultValue={defaultValue}
       rules={rules}
-      render={({ field }) => (
-        <div className="flex flex-col w-full">
-          <Label props={labelProps} required={props.isRequired}>
-            {label}
-          </Label>
+      render={({ field, fieldState }) => (
+        <InputContainer
+          label={label}
+          labelProps={labelProps}
+          required={rules?.required}
+          description={description}
+          descriptionProps={descriptionProps}
+          error={fieldState.error}
+          errorMessageProps={errorMessageProps}
+        >
           <div
             {...groupProps}
             className="flex bg-zinc-800 text-white rounded p-1 disabled:text-gray-400"
@@ -73,10 +89,10 @@ export default function NumberField(props: INumberField) {
                 {...decrementButtonProps}
                 onPress={() => {
                   if (
-                    (props.minValue || props.minValue === 0) &&
-                    field.value - 1 <= props.minValue
+                    (minValue || minValue === 0) &&
+                    field.value - 1 <= minValue
                   ) {
-                    field.onChange(props.minValue);
+                    field.onChange(minValue);
                     setIsMin(true);
                   } else {
                     field.onChange(field.value - 1);
@@ -84,14 +100,12 @@ export default function NumberField(props: INumberField) {
                   }
                 }}
                 icon={
-                  <span
-                    className={props.isDisabled || isMin ? 'text-gray-500' : ''}
-                  >
+                  <span className={isDisabled || isMin ? 'text-gray-500' : ''}>
                     <FaMinus />
                   </span>
                 }
                 theme="text"
-                isDisabled={isMin || props.isDisabled}
+                isDisabled={isMin || isDisabled}
               />
             </span>
 
@@ -100,9 +114,7 @@ export default function NumberField(props: INumberField) {
               ref={inputRef}
               onChange={(e) => {
                 field.onChange(
-                  e.target.value
-                    ? parseInt(e.target.value)
-                    : props.minValue ?? 0,
+                  e.target.value ? parseInt(e.target.value) : minValue ?? 0,
                 );
               }}
               value={field.value}
@@ -114,10 +126,10 @@ export default function NumberField(props: INumberField) {
                 {...incrementButtonProps}
                 onPress={() => {
                   if (
-                    (props.maxValue || props.maxValue === 0) &&
-                    field.value + 1 >= props.maxValue
+                    (maxValue || maxValue === 0) &&
+                    field.value + 1 >= maxValue
                   ) {
-                    field.onChange(props.maxValue);
+                    field.onChange(maxValue);
                     setIsMax(true);
                   } else {
                     field.onChange(field.value + 1);
@@ -125,32 +137,16 @@ export default function NumberField(props: INumberField) {
                   }
                 }}
                 icon={
-                  <span
-                    className={props.isDisabled || isMax ? 'text-gray-500' : ''}
-                  >
+                  <span className={isDisabled || isMax ? 'text-gray-500' : ''}>
                     <FaPlus />
                   </span>
                 }
                 theme="text"
-                isDisabled={isMax || props.isDisabled}
+                isDisabled={isMax || isDisabled}
               />
             </span>
           </div>
-
-          {props.description && (
-            <Description
-              description={props.description}
-              descriptionProps={descriptionProps}
-            />
-          )}
-
-          {isInvalid && (
-            <Invalid
-              errorMessageProps={errorMessageProps}
-              validationErrors={validationErrors}
-            />
-          )}
-        </div>
+        </InputContainer>
       )}
     />
   );

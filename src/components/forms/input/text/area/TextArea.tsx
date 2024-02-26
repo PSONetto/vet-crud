@@ -2,62 +2,61 @@ import { useRef } from 'react';
 import { useTextField } from 'react-aria';
 import { Controller } from 'react-hook-form';
 
-import { ITextArea } from '../../../interfaces';
-import Description from '../../../labels/description/Description';
-import Invalid from '../../../labels/invalid/Invalid';
-import Label from '../../../labels/label/Label';
+import InputContainer from '../../../labels/container/InputContainer';
+import { ITextAreaProps } from '../../interfaces';
 
-export default function TextArea(props: ITextArea) {
-  const { label, control, rules } = props;
-
+export default function TextArea({
+  control,
+  label,
+  name,
+  defaultValue,
+  rules,
+  description,
+  onChange,
+  ...props
+}: ITextAreaProps) {
   const ref = useRef(null);
 
-  const {
-    labelProps,
-    inputProps,
-    descriptionProps,
-    errorMessageProps,
-    isInvalid,
-    validationErrors,
-  } = useTextField({ ...props, inputElementType: 'textarea' }, ref);
+  const { labelProps, inputProps, descriptionProps, errorMessageProps } =
+    useTextField(
+      {
+        label,
+        name,
+        description,
+        onChange,
+        ...props,
+        inputElementType: 'textarea',
+      },
+      ref,
+    );
 
   return (
     <Controller
       control={control}
-      name={props.name ?? ''}
-      defaultValue={props.defaultValue ?? ''}
+      name={name ?? ''}
+      defaultValue={defaultValue ?? ''}
       rules={rules}
-      render={({ field }) => (
-        <div className="flex flex-col w-full">
-          <Label props={labelProps} required={props.isRequired}>
-            {label}
-          </Label>
-
+      render={({ field, fieldState }) => (
+        <InputContainer
+          label={label}
+          labelProps={labelProps}
+          required={rules?.required}
+          description={description}
+          descriptionProps={descriptionProps}
+          error={fieldState.error}
+          errorMessageProps={errorMessageProps}
+        >
           <textarea
             {...inputProps}
             className="bg-zinc-800 text-white rounded p-1 disabled:text-gray-400"
             ref={ref}
             onChange={(e) => {
-              props.onChange && props.onChange(e.target.value);
+              onChange && onChange(e.target.value);
               field.onChange(e.target.value);
             }}
             value={field.value}
           />
-
-          {props.description && (
-            <Description
-              description={props.description}
-              descriptionProps={descriptionProps}
-            />
-          )}
-
-          {isInvalid && (
-            <Invalid
-              errorMessageProps={errorMessageProps}
-              validationErrors={validationErrors}
-            />
-          )}
-        </div>
+        </InputContainer>
       )}
     />
   );

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { Item } from 'react-stately';
 
-import { Checkbox } from '../../forms/checkbox/Checkbox';
+import { Checkbox } from '../../forms/input/checkbox/Checkbox';
 import TextArea from '../../forms/input/text/area/TextArea';
 import TextField from '../../forms/input/text/field/TextField';
 import ComboBoxInput from '../../pickers/combobox/ComboBoxInput';
