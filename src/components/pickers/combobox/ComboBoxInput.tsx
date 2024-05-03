@@ -28,6 +28,8 @@ export default function ComboBoxInput({
               field.onChange && field.onChange(e);
               onSelectionChange && onSelectionChange(e);
             }}
+            defaultSelectedKey={defaultValue}
+            defaultInputValue={defaultValue}
             selectedKey={field.value}
             error={fieldState.error}
             rules={rules}

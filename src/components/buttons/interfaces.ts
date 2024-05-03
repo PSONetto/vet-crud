@@ -5,12 +5,12 @@ import { AriaButtonProps } from 'react-aria';
 export interface IButtonProps extends AriaButtonProps {
   label?: string;
   icon?: React.ReactNode;
-  className?: string;
   buttonRef?: RefObject<AriaButtonProps>;
   iconPosition?: 'right' | 'left';
   isLoading?: boolean;
+  theme?: 'primary' | 'danger' | 'text';
 }
 
-export interface IPrimaryButtonProps extends IButtonProps {
+export interface IStyledButtonProps extends IButtonProps {
   triggerProps?: AriaButtonProps<'button'>;
 }

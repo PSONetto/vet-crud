@@ -54,7 +54,7 @@ export default function ComboBox({
   const { buttonProps } = useButton(triggerProps, buttonRef);
 
   return (
-    <div className="inline-flex flex-col relative w-full">
+    <div className="inline-flex flex-col relative w-full has-[:focus]:outline-2">
       <InputContainer
         label={label}
         labelProps={labelProps}
@@ -68,15 +68,16 @@ export default function ComboBox({
           <input
             {...inputProps}
             ref={inputRef}
-            className="bg-zinc-800 text-white box-border rounded p-1 disabled:text-gray-400 outline-none w-full"
+            className={`bg-zinc-800 text-white box-border rounded p-1 outline-none w-full 
+            disabled:text-gray-400 disabled:bg-zinc-600 focus:bg-zinc-900`}
           />
 
           <button
             {...buttonProps}
             ref={buttonRef}
-            className={`px-1 bg-zinc-800 text-white cursor-default border-l border-gray-500 disabled:text-gray-400 ${
-              state.isFocused ? 'text-teal-500' : 'text-white'
-            }`}
+            className={`px-1 bg-zinc-800 text-white cursor-default border-l border-gray-500 
+            disabled:text-gray-400 disabled:bg-zinc-600 
+            ${state.isFocused ? 'text-teal-400' : 'text-white'}`}
           >
             {state.isOpen ? (
               <HiChevronUp className="w-5 h-5" aria-hidden="true" />

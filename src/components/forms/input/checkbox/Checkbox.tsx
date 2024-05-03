@@ -26,7 +26,7 @@ export function Checkbox({
   const ref = useRef(null);
 
   const { inputProps } = useCheckbox(
-    { name, isIndeterminate, onChange, children, ...props },
+    { name, isIndeterminate, isDisabled, onChange, children, ...props },
     state,
     ref,
   );
@@ -56,15 +56,13 @@ export function Checkbox({
 
             <div
               className={`${
-                field.value
-                  ? 'bg-teal-400 group-active:bg-teal-600'
-                  : 'bg-zinc-400'
-              } ${
                 isDisabled
-                  ? 'border-zinc-400'
+                  ? field.value
+                    ? 'bg-zinc-400 : border-zinc-400'
+                    : 'bg-zinc-600'
                   : field.value
-                    ? 'border-teal-400 group-active:border-teal-500'
-                    : 'border-zinc-400 group-active:border-zinc-500'
+                    ? 'bg-teal-400 border-teal-400 group-active:border-teal-600'
+                    : 'bg-zinc-800'
               } ${
                 isFocusVisible
                   ? 'outline outline-2 outline-offset-4 outline-teal-500 group-active:outline-teal-600'

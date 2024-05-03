@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useDialog } from 'react-aria';
 import { FaTimes } from 'react-icons/fa';
 
-import TextButton from '../../buttons/IconButton';
+import Button from '../../buttons/Button';
 import { DialogProps } from '../interfaces';
 
 export default function Dialog({
@@ -23,7 +23,7 @@ export default function Dialog({
             {title}
           </h3>
         )}
-        <TextButton onPress={close} icon={<FaTimes />} />
+        <Button onPress={close} icon={<FaTimes />} theme="text" />
       </div>
       <div className="p-4">{children}</div>
     </div>

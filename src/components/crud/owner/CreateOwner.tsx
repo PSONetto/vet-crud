@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 // eslint-disable-next-line import/named
 import { Key } from 'react-aria';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -8,10 +8,11 @@ import { Item } from 'react-stately';
 import { useMutation } from '@tanstack/react-query';
 
 import * as cities from '../../../data/cities.json';
+import { contactMethods } from '../../../data/contact.json';
 import { states } from '../../../data/states.json';
 import { api } from '../../../lib/api';
 import formatOptionArray from '../../../lib/utils/formatOptionArray';
-import PrimaryButton from '../../buttons/PrimaryButton';
+import Button from '../../buttons/Button';
 import { Checkbox } from '../../forms/input/checkbox/Checkbox';
 import TextArea from '../../forms/input/text/area/TextArea';
 import TextField from '../../forms/input/text/field/TextField';
@@ -20,8 +21,16 @@ import Dialog from '../../overlays/dialog/Dialog';
 import ComboBoxInput from '../../pickers/combobox/ComboBoxInput';
 import { IComboboxOption, ICreateOwnerProps } from './interfaces';
 
+function Container({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex flex-col mb-3 md:p-4 w-full overflow-y-auto">
+      {children}
+    </div>
+  );
+}
+
 export default function CreateOwner({ close }: ICreateOwnerProps) {
-  const { mutate: createMutation, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ['create'],
     mutationFn: createOwner,
   });
@@ -37,14 +46,6 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
   const [state, setState] = useState<string>();
   const [statesOptions, setStatesOptions] = useState<IComboboxOption[]>([]);
   const [citiesOptions, setCitiesOptions] = useState<IComboboxOption[]>([]);
-
-  const contactMethods = [
-    { label: 'Phone Call', value: 'phoneCall' },
-    { label: 'Phone SMS', value: 'phoneSms' },
-    { label: 'Email', value: 'email' },
-    { label: 'Whatsapp', value: 'whatsapp' },
-    { label: 'Telegram', value: 'telegram' },
-  ];
 
   async function createOwner(fieldValues: FieldValues) {
     const { data } = await api.post('/owner', fieldValues);
@@ -78,19 +79,11 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
 
         console.log(formattedFieldValues);
 
-        createMutation(formattedFieldValues);
+        mutate(formattedFieldValues);
       } catch (error) {
         console.error(error);
       }
     }
-  }
-
-  function Container({ children }: { children: React.ReactNode }) {
-    return (
-      <div className="flex flex-col mb-3 md:p-4 w-full overflow-y-auto">
-        {children}
-      </div>
-    );
   }
 
   useEffect(() => {
@@ -353,7 +346,7 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
         </Container>
 
         <div className="flex items-center justify-center gap-2 w-full">
-          <PrimaryButton
+          <Button
             type="button"
             icon={<FaChevronLeft />}
             onPress={() => {
@@ -364,9 +357,10 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
             }}
             isDisabled={tabKey === tabKeys[0]}
             label="Previous"
+            theme="primary"
           />
 
-          <PrimaryButton
+          <Button
             type="submit"
             icon={
               tabKey === tabKeys[tabKeys.length - 1] ? (
@@ -381,6 +375,7 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
             isDisabled={isPending}
             isLoading={isPending}
             label={tabKey === tabKeys[tabKeys.length - 1] ? 'Confirm' : 'Next'}
+            theme="primary"
           />
         </div>
       </form>

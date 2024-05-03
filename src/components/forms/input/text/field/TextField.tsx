@@ -38,7 +38,7 @@ export default function TextField({
         >
           <input
             {...inputProps}
-            className="bg-zinc-800 text-white rounded p-1 disabled:text-gray-400"
+            className="bg-zinc-800 text-white rounded p-1 disabled:text-gray-400 disabled:bg-zinc-600 focus:bg-zinc-900"
             ref={ref}
             onChange={(e) => {
               onChange && onChange(e.target.value);

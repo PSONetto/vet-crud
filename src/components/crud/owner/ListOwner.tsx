@@ -3,6 +3,7 @@ import { TableColumn } from 'react-data-table-component';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
+import findStateByAcronym from '../../../lib/utils/findStateByAcronym';
 import formatPhoneNumber from '../../../lib/utils/formatPhoneNumber';
 import { IOwner } from '../../../models/owner';
 import DataTableBase from '../../collections/datatable/DataTable';
@@ -23,7 +24,7 @@ export default function ListOwner({ data, isLoading }: IListOwnerProps) {
       omit: true,
     },
     {
-      name: 'E-mail',
+      name: 'Email',
       selector: (row) => row.emailAddress,
     },
     {
@@ -39,6 +40,7 @@ export default function ListOwner({ data, isLoading }: IListOwnerProps) {
     {
       name: 'State',
       selector: (row) => row.address.state,
+      format: (row) => findStateByAcronym(row.address.state),
       sortable: true,
     },
     {

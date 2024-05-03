@@ -11,6 +11,7 @@ export interface ICreateOwnerProps {
 
 export interface IEditOwnerProps {
   owner: IOwner;
+  close: () => void;
 }
 
 export interface IComboboxOption {
