@@ -1,9 +1,0 @@
-{
-  "contactMethods": [
-    { "label": "Phone Call", "value": "phoneCall" },
-    { "label": "Phone SMS", "value": "phoneSms" },
-    { "label": "Email", "value": "email" },
-    { "label": "Whatsapp", "value": "whatsapp" },
-    { "label": "Telegram", "value": "telegram" }
-  ]
-}

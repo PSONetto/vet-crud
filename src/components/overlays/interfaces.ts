@@ -26,6 +26,7 @@ export interface IModalTriggerProps extends Partial<OverlayTriggerState> {
   children(data: () => void): ReactElement;
   modalClassName?: string;
   labelIcon?: React.ReactNode;
+  theme?: 'primary' | 'secondary' | 'danger' | 'text';
 }
 
 export interface IPopoverProps extends Omit<AriaPopoverProps, 'popoverRef'> {

@@ -10,6 +10,7 @@ export default function ModalTrigger({
   label,
   children,
   labelIcon,
+  theme,
   ...props
 }: IModalTriggerProps) {
   const state = useOverlayTriggerState(props);
@@ -24,7 +25,7 @@ export default function ModalTrigger({
         {...triggerProps}
         icon={labelIcon}
         label={label}
-        theme="primary"
+        theme={theme}
       />
 
       {state.isOpen && (

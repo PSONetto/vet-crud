@@ -68,18 +68,6 @@ export default function Owner() {
               {owner?.firstName} {owner?.lastName}
             </DisplayData>
 
-            <DisplayData label="Treatment Authorization" large>
-              {owner?.treatmentAuthorization ? (
-                <span className="text-green-400">
-                  <FaCheck />
-                </span>
-              ) : (
-                <span className="text-red-400">
-                  <FaTimes />
-                </span>
-              )}
-            </DisplayData>
-
             <div className="flex">
               {isLoading ? (
                 <Button
@@ -89,7 +77,11 @@ export default function Owner() {
                 />
               ) : (
                 owner && (
-                  <ModalTrigger label="Edit Pet Owner" labelIcon={<FaPencil />}>
+                  <ModalTrigger
+                    label="Edit Pet Owner"
+                    labelIcon={<FaPencil />}
+                    theme="secondary"
+                  >
                     {(close) => <EditOwner owner={owner} close={close} />}
                   </ModalTrigger>
                 )
@@ -99,7 +91,7 @@ export default function Owner() {
 
           <Separator />
 
-          <div className="flex flex-wrap md:justify-between md:gap-2">
+          <div className="flex flex-col md:flex-row flex-wrap md:justify-between md:gap-2">
             <div className="flex flex-col">
               <span className="italic">Contact Information</span>
 
@@ -110,9 +102,6 @@ export default function Owner() {
                 </DisplayData>
                 <DisplayData label="Phone 2">
                   {formatPhoneNumber(owner?.alternativePhoneNumber)}
-                </DisplayData>
-                <DisplayData label="Preferred Contact Method">
-                  {owner?.preferredContactMethod}
                 </DisplayData>
               </div>
             </div>
@@ -136,15 +125,19 @@ export default function Owner() {
               <span className="italic">Additional Information</span>
 
               <div className="px-2">
-                <DisplayData label="ID Number">{owner?.idNumber}</DisplayData>
-                <DisplayData label="Occupation">
-                  {owner?.occupation}
+                <DisplayData label="Treatment Authorization">
+                  {owner?.treatmentAuthorization ? (
+                    <span className="text-green-400">
+                      <FaCheck />
+                    </span>
+                  ) : (
+                    <span className="text-red-400">
+                      <FaTimes />
+                    </span>
+                  )}
                 </DisplayData>
                 <DisplayData label="Accept Updates">
                   {owner?.acceptUpdates ? 'Yes' : 'No'}
-                </DisplayData>
-                <DisplayData label="Accept Marketing">
-                  {owner?.acceptMarketing ? 'Yes' : 'No'}
                 </DisplayData>
               </div>
             </div>

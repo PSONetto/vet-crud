@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --h-header: 142px;
+  --h-footer: 108px;
+
+  --h-main: calc(100vh - calc(var(--h-header) + var(--h-footer)));
+}
+
+body {
+  box-sizing: border-box;
+}
+
+header {
+  height: var(--h-header);
+}
+
+main {
+  min-height: var(--h-main);
+}
+
+footer {
+  height: var(--h-footer);
+}

@@ -8,7 +8,7 @@ export interface IButtonProps extends AriaButtonProps {
   buttonRef?: RefObject<AriaButtonProps>;
   iconPosition?: 'right' | 'left';
   isLoading?: boolean;
-  theme?: 'primary' | 'danger' | 'text';
+  theme?: 'primary' | 'secondary' | 'danger' | 'text';
 }
 
 export interface IStyledButtonProps extends IButtonProps {

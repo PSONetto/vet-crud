@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { VisuallyHidden } from 'react-aria';
 import { FieldValues, useForm } from 'react-hook-form';
 import { FaTimes } from 'react-icons/fa';
 import { FaCheck, FaPencil } from 'react-icons/fa6';
@@ -8,7 +7,6 @@ import { Item } from 'react-stately';
 import { useMutation } from '@tanstack/react-query';
 
 import * as cities from '../../../data/cities.json';
-import { contactMethods } from '../../../data/contact.json';
 import { states } from '../../../data/states.json';
 import { api } from '../../../lib/api';
 import formatOptionArray from '../../../lib/utils/formatOptionArray';
@@ -49,7 +47,6 @@ export default function EditOwner({ owner, close }: IEditOwnerProps) {
     try {
       const formattedFieldValues = {
         ...fieldValues,
-        idNumber: fieldValues.idNumber?.replace(/[^\d]/g, ''),
         phoneNumber: fieldValues.phoneNumber.replace(/[^\d]/g, ''),
         alternativePhoneNumber: fieldValues.alternativePhoneNumber?.replace(
           /[^\d]/g,
@@ -57,8 +54,6 @@ export default function EditOwner({ owner, close }: IEditOwnerProps) {
         ),
         zipCode: fieldValues.zipCode.replace(/[^\d]/g, ''),
       };
-
-      console.log(formattedFieldValues);
 
       mutate(formattedFieldValues);
 
@@ -131,31 +126,6 @@ export default function EditOwner({ owner, close }: IEditOwnerProps) {
           />
           <TextField
             control={control}
-            name="idNumber"
-            label="ID Number"
-            defaultValue={owner.idNumber}
-            isDisabled={!isEditing}
-            description={
-              <VisuallyHidden>
-                <span>Taxpayer Identification Numbers. Such as:</span>
-                <ul className="list-disc flex flex-col px-4">
-                  <li>{`Social Security Number (SSN).`}</li>
-                  <li>{`Employer Identification Number (EIN).`}</li>
-                  <li>
-                    {` Individual Taxpayer Identification Number (ITIN).`}
-                  </li>
-                </ul>
-              </VisuallyHidden>
-            }
-            rules={{
-              pattern: {
-                value: /^\d{3}-?\d{2}-?\d{4}$/,
-                message: 'The ID number may only contain digits or hyphen (-).',
-              },
-            }}
-          />
-          <TextField
-            control={control}
             name="emailAddress"
             label="Email Address"
             type="text"
@@ -207,24 +177,6 @@ export default function EditOwner({ owner, close }: IEditOwnerProps) {
               },
             }}
           />
-          <ComboBoxInput
-            control={control}
-            label="Preferred Contact Method"
-            name="preferredContactMethod"
-            popoverClassName="w-[66%] md:w-[17%]"
-            defaultValue={owner.preferredContactMethod}
-            isDisabled={!isEditing}
-            rules={{
-              required: {
-                value: true,
-                message: 'The preferred contact method is required.',
-              },
-            }}
-          >
-            {contactMethods.map((item) => (
-              <Item key={item.value}>{item.label}</Item>
-            ))}
-          </ComboBoxInput>
           <TextField
             control={control}
             name="street"
@@ -299,13 +251,6 @@ export default function EditOwner({ owner, close }: IEditOwnerProps) {
               },
             }}
           />
-          <TextField
-            control={control}
-            name="occupation"
-            label="Occupation"
-            defaultValue={owner.occupation}
-            isDisabled={!isEditing}
-          />
           <TextArea
             control={control}
             name="additionalNotes"
@@ -321,15 +266,6 @@ export default function EditOwner({ owner, close }: IEditOwnerProps) {
           >
             The owner aggrees to receive clinic updates and/or appointment
             reminders?
-          </Checkbox>
-          <Checkbox
-            control={control}
-            name="acceptMarketing"
-            defaultValue={owner.acceptMarketing}
-            isDisabled={!isEditing}
-          >
-            The owner aggrees to receive newsletters, promotions and other
-            contacts for marketing purposes?
           </Checkbox>
           <Checkbox
             control={control}

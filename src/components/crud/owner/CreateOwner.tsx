@@ -8,7 +8,6 @@ import { Item } from 'react-stately';
 import { useMutation } from '@tanstack/react-query';
 
 import * as cities from '../../../data/cities.json';
-import { contactMethods } from '../../../data/contact.json';
 import { states } from '../../../data/states.json';
 import { api } from '../../../lib/api';
 import formatOptionArray from '../../../lib/utils/formatOptionArray';
@@ -23,14 +22,14 @@ import { IComboboxOption, ICreateOwnerProps } from './interfaces';
 
 function Container({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col mb-3 md:p-4 w-full overflow-y-auto">
+    <div className="flex flex-col md:p-4 w-full overflow-y-auto">
       {children}
     </div>
   );
 }
 
 export default function CreateOwner({ close }: ICreateOwnerProps) {
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isError, isSuccess, error } = useMutation({
     mutationKey: ['create'],
     mutationFn: createOwner,
   });
@@ -40,7 +39,7 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
     reValidateMode: 'onSubmit',
   });
 
-  const tabKeys = ['personal', 'contact', 'address', 'additional'];
+  const tabKeys = ['personal', 'address', 'additional'];
 
   const [tabKey, setTabKey] = useState<Key>(tabKeys[0]);
   const [state, setState] = useState<string>();
@@ -68,7 +67,6 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
       try {
         const formattedFieldValues = {
           ...fieldValues,
-          idNumber: fieldValues.idNumber?.replace(/[^\d]/g, ''),
           phoneNumber: fieldValues.phoneNumber.replace(/[^\d]/g, ''),
           alternativePhoneNumber: fieldValues.alternativePhoneNumber?.replace(
             /[^\d]/g,
@@ -76,8 +74,6 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
           ),
           zipCode: fieldValues.zipCode.replace(/[^\d]/g, ''),
         };
-
-        console.log(formattedFieldValues);
 
         mutate(formattedFieldValues);
       } catch (error) {
@@ -158,34 +154,6 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
                 />
                 <TextField
                   control={control}
-                  name="idNumber"
-                  label="ID Number"
-                  description={
-                    <>
-                      <span>Taxpayer Identification Numbers. Such as:</span>
-                      <ul className="list-disc flex flex-col px-4">
-                        <li>{`Social Security Number (SSN).`}</li>
-                        <li>{`Employer Identification Number (EIN).`}</li>
-                        <li>
-                          {` Individual Taxpayer Identification Number (ITIN).`}
-                        </li>
-                      </ul>
-                    </>
-                  }
-                  rules={{
-                    pattern: {
-                      value: /^\d{3}-?\d{2}-?\d{4}$/,
-                      message:
-                        'The ID number may only contain digits or hyphen (-).',
-                    },
-                  }}
-                />
-              </Container>
-            </Item>
-            <Item key={tabKeys[1]} title="Contact Information">
-              <Container>
-                <TextField
-                  control={control}
                   name="emailAddress"
                   label="Email Address"
                   type="text"
@@ -231,25 +199,9 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
                     },
                   }}
                 />
-                <ComboBoxInput
-                  control={control}
-                  label="Preferred Contact Method"
-                  name="preferredContactMethod"
-                  popoverClassName="w-[66%]"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'The preferred contact method is required.',
-                    },
-                  }}
-                >
-                  {contactMethods.map((item) => (
-                    <Item key={item.value}>{item.label}</Item>
-                  ))}
-                </ComboBoxInput>
               </Container>
             </Item>
-            <Item key={tabKeys[2]} title="Address Information">
+            <Item key={tabKeys[1]} title="Address Information">
               <Container>
                 <TextField
                   control={control}
@@ -316,13 +268,8 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
                 />
               </Container>
             </Item>
-            <Item key={tabKeys[3]} title="Additional Information">
+            <Item key={tabKeys[2]} title="Additional Information">
               <Container>
-                <TextField
-                  control={control}
-                  name="occupation"
-                  label="Occupation"
-                />
                 <TextArea
                   control={control}
                   name="additionalNotes"
@@ -331,10 +278,6 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
                 <Checkbox control={control} name="acceptUpdates">
                   The owner aggrees to receive clinic updates and/or appointment
                   reminders?
-                </Checkbox>
-                <Checkbox control={control} name="acceptMarketing">
-                  The owner aggrees to receive newsletters, promotions and other
-                  contacts for marketing purposes?
                 </Checkbox>
                 <Checkbox control={control} name="treatmentAuthorization">
                   The owner authorizes veterinary treatment for their pets,
@@ -345,7 +288,19 @@ export default function CreateOwner({ close }: ICreateOwnerProps) {
           </Tabs>
         </Container>
 
-        <div className="flex items-center justify-center gap-2 w-full">
+        <div className="flex p-5">
+          {isError && (
+            <span className="text-red-400 font-bold">{error.message}</span>
+          )}
+
+          {isSuccess && (
+            <span className="text-green-400 font-bold">
+              Owner created successefully
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center justify-center gap-2 w-full mt-3">
           <Button
             type="button"
             icon={<FaChevronLeft />}

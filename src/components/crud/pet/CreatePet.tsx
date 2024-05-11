@@ -1,50 +1,76 @@
-import { useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 // eslint-disable-next-line import/named
-import { Key } from 'react-aria';
 import { FieldValues, useForm } from 'react-hook-form';
-import { FaCheck, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import { Item } from 'react-stately';
 
+import { useMutation } from '@tanstack/react-query';
+
+import { animals } from '../../../data/animals.json';
+import { api } from '../../../lib/api';
 import Button from '../../buttons/Button';
-import { Checkbox } from '../../forms/input/checkbox/Checkbox';
-import TextArea from '../../forms/input/text/area/TextArea';
 import TextField from '../../forms/input/text/field/TextField';
-import Tabs from '../../navigation/tab/Tabs';
 import Dialog from '../../overlays/dialog/Dialog';
 import ComboBoxInput from '../../pickers/combobox/ComboBoxInput';
-import { ICreatePet } from './interfaces';
+import { ICreatePetProps } from './interfaces';
 
-export default function CreatePet({ close }: ICreatePet) {
-  const { control, handleSubmit } = useForm();
+function Container({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex flex-col md:p-4 w-full overflow-y-auto">
+      {children}
+    </div>
+  );
+}
 
-  const [tabKey, setTabKey] = useState<Key>(1);
+export default function CreatPet({ close }: ICreatePetProps) {
+  const { mutate, isPending, isError, isSuccess, error } = useMutation({
+    mutationKey: ['create'],
+    mutationFn: createPet,
+  });
 
-  const contactMethods = ['Phone', 'E-mail', 'Whatsapp'];
-  const keys = ['1', '2', '3', '4'];
+  const { control, handleSubmit, resetField } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
-  function moveNext() {
-    Number(tabKey) + 1 > 4
-      ? setTabKey('4')
-      : setTabKey(String(Number(tabKey) + 1));
+  const [species, setSpecies] = useState('');
+  const [breeds, setBreeds] = useState<string[]>([]);
+
+  async function createPet(fieldValues: FieldValues) {
+    const { data } = await api.post('/pet', fieldValues);
+
+    return data;
   }
 
-  function submitData(fieldValues: FieldValues) {
-    console.log(fieldValues);
+  async function submitData(fieldValues: FieldValues) {
+    try {
+      const formattedFieldValues = {
+        ...fieldValues,
+        idNumber: fieldValues.idNumber?.replace(/[^\d]/g, ''),
+        phoneNumber: fieldValues.phoneNumber.replace(/[^\d]/g, ''),
+        alternativePhoneNumber: fieldValues.alternativePhoneNumber?.replace(
+          /[^\d]/g,
+          '',
+        ),
+        zipCode: fieldValues.zipCode.replace(/[^\d]/g, ''),
+      };
 
-    if (tabKey !== '4') {
-      moveNext();
-    } else {
-      console.log('submit');
+      mutate(formattedFieldValues);
+    } catch (error) {
+      console.error(error);
     }
   }
 
-  function Container({ children }: { children: React.ReactNode }) {
-    return (
-      <div className="flex flex-col mb-3 p-4 w-full overflow-y-auto">
-        {children}
-      </div>
-    );
-  }
+  useEffect(() => {
+    resetField('breed');
+
+    if (species) {
+      const arrBreeds = animals.find((animal) => animal.species === species)
+        ?.commonBreeds;
+
+      setBreeds(arrBreeds ?? []);
+    }
+  }, [resetField, species]);
 
   return (
     <Dialog title="Create Pet" close={close} className="dark:text-gray-100">
@@ -53,168 +79,78 @@ export default function CreatePet({ close }: ICreatePet) {
         className="flex flex-col items-center justify-center"
       >
         <Container>
-          <Tabs
-            aria-label="Pet Information Form Tabs"
-            selectedKey={tabKey}
-            onSelectionChange={setTabKey}
-            disabledKeys={keys.filter((e) => e !== tabKey)}
+          <TextField
+            control={control}
+            name="name"
+            label="Name"
+            rules={{
+              required: {
+                value: true,
+                message: 'The pet name is required.',
+              },
+              pattern: {
+                value: /^[A-Za-zÀ-ÖØ-öø-ÿ\-' ]+$/,
+                message: `The pet name may only contain letters of the latin script, hyphen (-),
+                       apostrophe (') or blank space (in case of composite given name).`,
+              },
+            }}
+          />
+          <ComboBoxInput
+            control={control}
+            label="Species"
+            name="species"
+            popoverClassName="w-[66%]"
+            rules={{
+              required: {
+                value: true,
+                message: 'The pet species is required.',
+              },
+            }}
+            onSelectionChange={(e) => setSpecies(String(e))}
           >
-            <Item key={1} title="Personal Information">
-              <Container>
-                <TextField
-                  control={control}
-                  name="firstName"
-                  label="First Name"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="lastName"
-                  label="Last Name"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="idNumber"
-                  label="ID Number"
-                  type="tel"
-                  validationBehavior="native"
-                />
-              </Container>
-            </Item>
-            <Item key={2} title="Contact Information">
-              <Container>
-                <TextField
-                  control={control}
-                  name="emailAddress"
-                  label="Email Address"
-                  type="email"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="phoneNumber"
-                  label="Phone Number"
-                  type="tel"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="alternativePhoneNumber"
-                  label="Alternative Phone Number"
-                  type="tel"
-                  validationBehavior="native"
-                />
-                <ComboBoxInput
-                  control={control}
-                  label="Preferred Contact Method"
-                  name="preferredContactMethod"
-                  popoverClassName="w-[72%]"
-                  isRequired
-                >
-                  {contactMethods.sort().map((method) => (
-                    <Item key={method.toLowerCase()}>{method}</Item>
-                  ))}
-                </ComboBoxInput>
-              </Container>
-            </Item>
-            <Item key={3} title="Address Information">
-              <Container>
-                <TextField
-                  control={control}
-                  name="street"
-                  label="Street"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="state"
-                  label="State"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="city"
-                  label="City"
-                  isRequired
-                  validationBehavior="native"
-                />
-                <TextField
-                  control={control}
-                  name="zipCode"
-                  label="Zip Code"
-                  validationBehavior="native"
-                />
-              </Container>
-            </Item>
-            <Item key={4} title="Additional Information">
-              <Container>
-                <TextField
-                  control={control}
-                  name="occupation"
-                  label="Occupation"
-                  validationBehavior="native"
-                />
-                <TextArea
-                  control={control}
-                  name="additionalNotes"
-                  label="Additional Notes"
-                  validationBehavior="native"
-                />
-                <Checkbox
-                  control={control}
-                  name="acceptUpdates"
-                  validationBehavior="native"
-                >
-                  Accept Updates
-                </Checkbox>
-
-                <Checkbox
-                  control={control}
-                  name="acceptMarketing"
-                  validationBehavior="native"
-                >
-                  Accept Marketing
-                </Checkbox>
-              </Container>
-            </Item>
-          </Tabs>
+            {animals.map((item) => (
+              <Item key={item.species}>{item.species}</Item>
+            ))}
+          </ComboBoxInput>
+          <ComboBoxInput
+            control={control}
+            label="Breed"
+            name="breed"
+            popoverClassName="w-[66%]"
+            rules={{
+              required: {
+                value: true,
+                message: 'The pet breed is required.',
+              },
+            }}
+          >
+            {breeds.map((item) => (
+              <Item key={item}>{item}</Item>
+            ))}
+          </ComboBoxInput>
         </Container>
 
-        <div className="flex items-center justify-center gap-2 w-full">
-          <Button
-            type="button"
-            icon={<FaChevronLeft />}
-            theme={tabKey !== '1' ? 'primary' : undefined}
-            onPress={() => {
-              Number(tabKey) - 1 < 1
-                ? setTabKey('1')
-                : setTabKey(String(Number(tabKey) - 1));
-            }}
-            isDisabled={tabKey === '1'}
-          >
-            Previous
-          </Button>
-          {tabKey === '4' ? (
-            <Button type="submit" icon={<FaCheck />} theme="primary">
-              Confirm
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              icon={<FaChevronRight />}
-              theme="primary"
-              iconPos="right"
-            >
-              Next
-            </Button>
+        <div className="flex p-5">
+          {isError && (
+            <span className="text-red-400 font-bold">{error.message}</span>
           )}
+
+          {isSuccess && (
+            <span className="text-green-400 font-bold">
+              Pet created successefully
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center justify-center gap-2 w-full mt-3">
+          <Button
+            type="submit"
+            icon={<FaCheck />}
+            isDisabled={isPending}
+            isLoading={isPending}
+            label="Confirm"
+            theme="primary"
+          />
         </div>
       </form>
     </Dialog>

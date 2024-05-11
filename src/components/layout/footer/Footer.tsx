@@ -3,6 +3,7 @@ import { FaGithub, FaHouse, FaLinkedin } from 'react-icons/fa6';
 
 import { getYear } from 'date-fns';
 
+import '../../../index.css';
 import AriaLink from '../../navigation/link/AriaLink';
 
 export default function Footer() {

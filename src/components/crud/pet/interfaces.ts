@@ -5,6 +5,6 @@ export interface IListPetProps {
   isLoading: boolean;
 }
 
-export interface ICreatePet {
+export interface ICreatePetProps {
   close: () => void;
 }
